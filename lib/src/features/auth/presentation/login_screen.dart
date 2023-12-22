@@ -14,6 +14,10 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  bool isHidden = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,59 +30,88 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               children: [
                 SizedBox(
                   height: context.height * 0.9,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: context.width,
-                          height: context.height * 0.05,
-                        ),
-                        const Text(
-                          "Get Started",
-                          style: TextStyle(
-                              fontSize: 35, fontWeight: FontWeight.bold),
-                        ),
-                        h4,
-                        const Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Text(
-                            "Please fill your info to login",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w400),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: context.width,
+                            height: context.height * 0.05,
                           ),
-                        ),
-                        h2,
-                        TextFormField(
-                          decoration: InputDecoration(
-                              hintText: "username / email",
-                              fillColor: Colors.grey.withOpacity(0.3),
-                              filled: true,
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(10)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10))),
-                        ),
-                        h2,
-                        TextFormField(
-                          decoration: InputDecoration(
-                              hintText: "password",
-                              fillColor: Colors.grey.withOpacity(0.3),
-                              filled: true,
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(10)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10))),
-                        ),
-                        h2,
-                        CustomButton(
-                            child: const Text(
-                              "Login",
-                              style: TextStyle(color: Colors.white),
+                          const Text(
+                            "Get Started",
+                            style: TextStyle(
+                                fontSize: 35, fontWeight: FontWeight.bold),
+                          ),
+                          h4,
+                          const Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Text(
+                              "Please fill your info to login",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w400),
                             ),
-                            onPressed: () {}),
-                      ]),
+                          ),
+                          h2,
+                          TextFormField(
+                            controller: emailController,
+                            validator: (value) {
+                              if (value == "") {
+                                return "Please enter email or username";
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                                hintText: "username / email",
+                                fillColor: Colors.grey.withOpacity(0.3),
+                                filled: true,
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(10)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10))),
+                          ),
+                          h2,
+                          TextFormField(
+                            obscureText: isHidden,
+                            controller: passwordController,
+                            validator: (value) {
+                              if (value == "") {
+                                return "Please enter password";
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                                suffixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        isHidden = !isHidden;
+                                      });
+                                    },
+                                    icon: const Icon(Icons.remove_red_eye)),
+                                hintText: "password",
+                                fillColor: Colors.grey.withOpacity(0.3),
+                                filled: true,
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(10)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10))),
+                          ),
+                          h2,
+                          CustomButton(
+                              child: const Text(
+                                "Login",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: () {
+                                if (formKey.currentState!.validate()) {
+                                  print("Validated");
+                                }
+                              }),
+                        ]),
+                  ),
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
