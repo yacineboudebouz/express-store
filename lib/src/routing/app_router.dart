@@ -11,5 +11,7 @@ final loggedOutRoute = RouteMap(
         ),
     '/login': (route) => const MaterialPage(child: LoginScreen()),
     '/register': (route) => const MaterialPage(child: RegisterScreen()),
+
+    //
   },
 );
