@@ -3,7 +3,7 @@ import 'package:express_shop/src/core/extentions.dart';
 import 'package:express_shop/src/theme/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:routemaster/routemaster.dart';
+import 'package:go_router/go_router.dart';
 
 class LandingScreen extends ConsumerStatefulWidget {
   const LandingScreen({super.key});
@@ -60,11 +60,13 @@ class _LandingScreenState extends ConsumerState<LandingScreen> {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () {
-                  Routemaster.of(context).push('login');
+                  GoRouter.of(context).goNamed('login');
                 }),
           ),
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                GoRouter.of(context).goNamed("register");
+              },
               child: const Text(
                 "Register",
                 style: TextStyle(color: Pallete.blackColor),

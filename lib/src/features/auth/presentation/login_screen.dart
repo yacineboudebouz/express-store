@@ -1,10 +1,13 @@
 import 'package:express_shop/src/core/common/custom_button.dart';
 import 'package:express_shop/src/core/common/gaps.dart';
 import 'package:express_shop/src/core/extentions.dart';
+import 'package:express_shop/src/features/auth/presentation/auth_controller.dart';
 import 'package:express_shop/src/theme/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:routemaster/routemaster.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../core/utils.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -20,6 +23,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   bool isHidden = true;
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(authControllerProvider);
+    ref.listen<AsyncValue>(authControllerProvider.select((state) => state),
+        (_, state) {
+      if (state.hasError) {
+        showDialogError(context, state.error.toString());
+      }
+    });
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
@@ -101,13 +111,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                           h2,
                           CustomButton(
-                              child: const Text(
-                                "Login",
-                                style: TextStyle(color: Colors.white),
-                              ),
+                              child: state.isLoading
+                                  ? const CircularProgressIndicator()
+                                  : const Text(
+                                      "Login",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {
-                                  print("Validated");
+                                  ref
+                                      .read(authControllerProvider.notifier)
+                                      .loginUser(emailController.text,
+                                          passwordController.text);
                                 }
                               }),
                         ]),
@@ -117,7 +132,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   alignment: Alignment.bottomCenter,
                   child: TextButton(
                       onPressed: () {
-                        Routemaster.of(context).push("/register");
+                        GoRouter.of(context).goNamed("register");
                       },
                       child: const Text(
                         "Register",

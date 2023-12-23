@@ -1,8 +1,10 @@
 import 'package:express_shop/src/core/common/custom_button.dart';
 import 'package:express_shop/src/core/extentions.dart';
+import 'package:express_shop/src/core/utils.dart';
+import 'package:express_shop/src/features/auth/presentation/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:routemaster/routemaster.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/common/gaps.dart';
 import '../../../theme/pallete.dart';
@@ -22,6 +24,17 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(authControllerProvider);
+    ref.listen<AsyncValue>(authControllerProvider.select((state) => state),
+        (_, state) {
+      if (state.hasError) {
+        if (state.error.toString() == "Account Created successfully") {
+          showDialogSuccess(context, state.error.toString());
+        } else {
+          showDialogError(context, state.error.toString());
+        }
+      }
+    });
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
@@ -96,10 +109,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           ),
                           h2,
                           TextFormField(
+                            obscureText: true,
                             controller: passwordController,
                             validator: (value) {
                               if (value != confirmPasswordController.text) {
                                 return "Please enter the same password";
+                              }
+                              if (value!.length < 6) {
+                                return "Password must be at least 6 caracters";
                               }
                               return null;
                             },
@@ -115,10 +132,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           ),
                           h2,
                           TextFormField(
+                            obscureText: true,
                             controller: confirmPasswordController,
                             validator: (value) {
                               if (value != passwordController.text) {
                                 return "Please enter the same password";
+                              }
+                              if (value!.length < 6) {
+                                return "Password must be at least 6 caracters";
                               }
                               return null;
                             },
@@ -134,13 +155,20 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           ),
                           h2,
                           CustomButton(
-                              child: const Text(
-                                "Register",
-                                style: TextStyle(color: Colors.white),
-                              ),
+                              child: state.isLoading
+                                  ? const CircularProgressIndicator()
+                                  : const Text(
+                                      "Register",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {
-                                  print("validated");
+                                  ref
+                                      .read(authControllerProvider.notifier)
+                                      .registerUser(
+                                          emailController.text,
+                                          usernameController.text,
+                                          passwordController.text);
                                 }
                               }),
                         ]),
@@ -149,7 +177,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     alignment: Alignment.bottomCenter,
                     child: TextButton(
                         onPressed: () {
-                          Routemaster.of(context).push('/login');
+                          GoRouter.of(context).goNamed('login');
                         },
                         child: const Text(
                           "Already have account ? Login",
