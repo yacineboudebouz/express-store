@@ -1,3 +1,4 @@
+import 'package:express_shop/src/features/main/presentation/main_app.dart';
 import 'package:express_shop/src/core/providers/user_provider.dart';
 import 'package:express_shop/src/features/auth/presentation/login_screen.dart';
 import 'package:express_shop/src/features/auth/presentation/register_screen.dart';
@@ -7,7 +8,7 @@ import 'package:express_shop/src/features/landing/presentation/landing_screen.da
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-enum AppRoute { landing, register, login, home }
+enum AppRoute { landing, register, login, home, mainapp }
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -32,8 +33,8 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           ]),
       GoRoute(
           path: '/',
-          name: AppRoute.home.name,
-          builder: (context, state) => const HomeScreen())
+          name: AppRoute.mainapp.name,
+          builder: (context, state) => const MainApp())
     ],
   );
 });
