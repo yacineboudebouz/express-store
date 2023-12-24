@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,6 +18,7 @@ class Pallete {
   static var redColor = Colors.red.shade500;
   static var blueColor = Colors.blue.shade300;
   static const blackTheme = Color(0xff121212);
+  static const greyTheme = Color(0xffB8B8B8);
 
   // Themes
   static var darkModeAppTheme = ThemeData.dark().copyWith(

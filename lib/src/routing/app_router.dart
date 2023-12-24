@@ -1,19 +1,20 @@
+import 'package:express_shop/src/features/category/presentation/category_books_screen.dart';
 import 'package:express_shop/src/features/main/presentation/main_app.dart';
 import 'package:express_shop/src/core/providers/user_provider.dart';
 import 'package:express_shop/src/features/auth/presentation/login_screen.dart';
 import 'package:express_shop/src/features/auth/presentation/register_screen.dart';
-import 'package:express_shop/src/features/home/presentaion/home_screen.dart';
+
 import 'package:express_shop/src/features/landing/presentation/landing_screen.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-enum AppRoute { landing, register, login, home, mainapp }
+enum AppRoute { landing, register, login, home, mainapp, category }
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: ref.watch(userStateProvider) == null ? '/landing' : '/',
-    debugLogDiagnostics: false,
+    debugLogDiagnostics: true,
     routes: [
       GoRoute(
           path: '/landing',
@@ -32,9 +33,20 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             )
           ]),
       GoRoute(
-          path: '/',
-          name: AppRoute.mainapp.name,
-          builder: (context, state) => const MainApp())
+        path: '/',
+        name: AppRoute.mainapp.name,
+        builder: (context, state) => const MainApp(),
+        routes: [
+          GoRoute(
+            path: 'category/:category',
+            name: AppRoute.category.name,
+            builder: (context, state) {
+              final category = state.pathParameters['category']!;
+              return CategoryBooksScreen(category: category);
+            },
+          )
+        ],
+      )
     ],
   );
 });

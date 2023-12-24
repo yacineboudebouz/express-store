@@ -49,6 +49,17 @@ class OnDealBook extends OnSellBook {
     };
   }
 
+  OnSellBook toOnSellBook() {
+    return OnSellBook(
+        id: id,
+        title: title,
+        author: author,
+        coverPic: coverPic,
+        genre: genre,
+        price: price - (price * discountPersountage) / 100,
+        isbn: isbn);
+  }
+
   factory OnDealBook.fromMap(Map<String, dynamic> map) {
     return OnDealBook(
         id: map['BookID'] as int,

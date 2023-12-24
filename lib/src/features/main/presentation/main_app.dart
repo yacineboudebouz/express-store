@@ -1,4 +1,3 @@
-import 'package:express_shop/src/features/home/presentaion/home_screen.dart';
 import 'package:express_shop/src/features/main/controller/main_app_controller.dart';
 import 'package:express_shop/src/theme/pallete.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +16,7 @@ class _MainAppState extends ConsumerState<MainApp> {
   Widget build(BuildContext context) {
     final state = ref.watch(mainAppControllerProvider);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: PageView(
         controller: state.controller,
         children: state.screens,
