@@ -1,3 +1,4 @@
+import 'package:express_shop/src/features/book/presentaion/book_screen.dart';
 import 'package:express_shop/src/features/category/presentation/category_books_screen.dart';
 import 'package:express_shop/src/features/main/presentation/main_app.dart';
 import 'package:express_shop/src/core/providers/user_provider.dart';
@@ -10,7 +11,16 @@ import 'package:express_shop/src/features/search/presentation/search_screen.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-enum AppRoute { landing, register, login, home, mainapp, category, search }
+enum AppRoute {
+  landing,
+  register,
+  login,
+  home,
+  mainapp,
+  category,
+  search,
+  book
+}
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -52,6 +62,14 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) {
               final query = state.pathParameters['query']!;
               return SearchScreen(query: query);
+            },
+          ),
+          GoRoute(
+            path: "book/:id",
+            name: AppRoute.book.name,
+            builder: (context, state) {
+              final id = int.parse(state.pathParameters['id']!);
+              return BookScreen(id: id);
             },
           )
         ],

@@ -31,7 +31,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               child: ref.watch(searchBookProvider(widget.query)).when(
                     data: (books) => books.isEmpty
                         ? const Center(
-                            child: Text("No book in this category "),
+                            child: Text("No books with this term "),
                           )
                         : Expanded(
                             child: GridView.builder(
