@@ -4,6 +4,7 @@ import 'package:express_shop/src/features/category/presentation/category_screen_
 import 'package:express_shop/src/features/category/presentation/widgets/category_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class CategoryScreen extends ConsumerStatefulWidget {
   const CategoryScreen({super.key});
@@ -28,6 +29,10 @@ class _CategoryScreenState extends ConsumerState<CategoryScreen> {
               SizedBox(
                 width: context.width,
                 child: TextField(
+                  onSubmitted: (value) {
+                    GoRouter.of(context)
+                        .goNamed("search", pathParameters: {"query": value});
+                  },
                   controller: searchController,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.search),
@@ -54,21 +59,23 @@ class _CategoryScreenState extends ConsumerState<CategoryScreen> {
                 ),
               ),
               SizedBox(
-                  height: context.height * 0.6,
-                  child: GridView.builder(
-                      physics: const BouncingScrollPhysics(
-                          parent: AlwaysScrollableScrollPhysics()),
-                      padding: const EdgeInsets.all(10.0),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 3 / 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                      ),
-                      itemCount: categories.length,
-                      itemBuilder: ((context, index) =>
-                          CategoryCard(category: categories[index]))))
+                height: context.height * 0.6,
+                child: GridView.builder(
+                  physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  padding: const EdgeInsets.all(10.0),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 3 / 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+                  itemCount: categories.length,
+                  itemBuilder: ((context, index) => CategoryCard(
+                        category: categories[index],
+                      )),
+                ),
+              )
             ],
           ),
         )));

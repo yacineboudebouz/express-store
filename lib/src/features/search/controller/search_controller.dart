@@ -16,7 +16,7 @@ final searchBookProvider =
 class SearchController extends StateNotifier<AsyncValue<void>> {
   SearchController({required SearchRepository searchRepository})
       : _searchRepository = searchRepository,
-        super(AsyncData(null));
+        super(const AsyncData(null));
   final SearchRepository _searchRepository;
   Future<List<OnSellBook>> searchBook(String query) {
     return _searchRepository.searchBook(query);

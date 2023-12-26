@@ -7,13 +7,14 @@ class Book {
   final String author;
   final String coverPic;
   final String genre;
-  Book({
-    required this.id,
-    required this.title,
-    required this.author,
-    required this.coverPic,
-    required this.genre,
-  });
+  final String description;
+  Book(
+      {required this.id,
+      required this.title,
+      required this.author,
+      required this.coverPic,
+      required this.genre,
+      required this.description});
 
   Book copyWith({
     int? id,
@@ -21,14 +22,15 @@ class Book {
     String? author,
     String? coverPic,
     String? genre,
+    String? description,
   }) {
     return Book(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      author: author ?? this.author,
-      coverPic: coverPic ?? this.coverPic,
-      genre: genre ?? this.genre,
-    );
+        id: id ?? this.id,
+        title: title ?? this.title,
+        author: author ?? this.author,
+        coverPic: coverPic ?? this.coverPic,
+        genre: genre ?? this.genre,
+        description: description ?? this.description);
   }
 
   Map<String, dynamic> toMap() {
@@ -43,12 +45,12 @@ class Book {
 
   factory Book.fromMap(Map<String, dynamic> map) {
     return Book(
-      id: map['id'] as int,
-      title: map['title'] as String,
-      author: map['author'] as String,
-      coverPic: map['coverPic'] as String,
-      genre: map['genre'] as String,
-    );
+        id: map['id'] as int,
+        title: map['title'] as String,
+        author: map['author'] as String,
+        coverPic: map['coverPic'] as String,
+        genre: map['genre'] as String,
+        description: map['Description']);
   }
 
   String toJson() => json.encode(toMap());

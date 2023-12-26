@@ -21,8 +21,10 @@ class SearchRepository {
           'Content-Type': 'application/json; charset=UTF-8'
         });
     if (res.statusCode == 200) {
-      var booksFromServer = jsonDecode(res.body)['books'];
+      var booksFromServer = jsonDecode(res.body)['myBooks'];
+      print(booksFromServer);
       List<OnSellBook> books = [];
+
       for (var book in booksFromServer) {
         books.add(OnSellBook.fromMap(book));
       }

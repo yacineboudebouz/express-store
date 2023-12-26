@@ -11,6 +11,7 @@ class OnDealBook extends OnSellBook {
       required super.genre,
       required super.price,
       required super.isbn,
+      required super.description,
       required this.discountPersountage});
   final int discountPersountage;
 
@@ -23,7 +24,8 @@ class OnDealBook extends OnSellBook {
       String? genre,
       double? price,
       String? isbn,
-      int? discountPersountage}) {
+      int? discountPersountage,
+      String? description}) {
     return OnDealBook(
         id: id ?? this.id,
         title: title ?? this.title,
@@ -32,6 +34,7 @@ class OnDealBook extends OnSellBook {
         genre: genre ?? this.genre,
         price: price ?? this.price,
         isbn: isbn ?? this.isbn,
+        description: description ?? this.description,
         discountPersountage: discountPersountage ?? this.discountPersountage);
   }
 
@@ -45,7 +48,8 @@ class OnDealBook extends OnSellBook {
       'Genre': genre,
       'Price': price,
       'ISBN': isbn,
-      'DiscountPercentage': discountPersountage
+      'DiscountPercentage': discountPersountage,
+      'Descritpion': description
     };
   }
 
@@ -57,7 +61,8 @@ class OnDealBook extends OnSellBook {
         coverPic: coverPic,
         genre: genre,
         price: price - (price * discountPersountage) / 100,
-        isbn: isbn);
+        isbn: isbn,
+        description: description);
   }
 
   factory OnDealBook.fromMap(Map<String, dynamic> map) {
@@ -69,7 +74,8 @@ class OnDealBook extends OnSellBook {
         genre: map['Genre'] as String,
         price: map['Price'] as double,
         isbn: map['ISBN'] as String,
-        discountPersountage: map["DiscountPercentage"] as int);
+        discountPersountage: map["DiscountPercentage"] as int,
+        description: map['Description']);
   }
   @override
   String toJson() => json.encode(toMap());

@@ -9,6 +9,7 @@ class OnSellBook extends Book {
       required super.author,
       required super.coverPic,
       required super.genre,
+      required super.description,
       required this.price,
       required this.isbn});
   final double price;
@@ -21,7 +22,8 @@ class OnSellBook extends Book {
       String? coverPic,
       String? genre,
       double? price,
-      String? isbn}) {
+      String? isbn,
+      String? description}) {
     return OnSellBook(
         id: id ?? this.id,
         title: title ?? this.title,
@@ -29,7 +31,8 @@ class OnSellBook extends Book {
         coverPic: coverPic ?? this.coverPic,
         genre: genre ?? this.genre,
         price: price ?? this.price,
-        isbn: isbn ?? this.isbn);
+        isbn: isbn ?? this.isbn,
+        description: description ?? this.description);
   }
 
   @override
@@ -54,6 +57,7 @@ class OnSellBook extends Book {
       genre: map['Genre'] as String,
       price: map['Price'] as double,
       isbn: map['ISBN'] as String,
+      description: map['Description'] as String,
     );
   }
   @override

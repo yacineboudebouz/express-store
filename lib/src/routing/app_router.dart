@@ -5,11 +5,12 @@ import 'package:express_shop/src/features/auth/presentation/login_screen.dart';
 import 'package:express_shop/src/features/auth/presentation/register_screen.dart';
 
 import 'package:express_shop/src/features/landing/presentation/landing_screen.dart';
+import 'package:express_shop/src/features/search/presentation/search_screen.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-enum AppRoute { landing, register, login, home, mainapp, category }
+enum AppRoute { landing, register, login, home, mainapp, category, search }
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -43,6 +44,14 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) {
               final category = state.pathParameters['category']!;
               return CategoryBooksScreen(category: category);
+            },
+          ),
+          GoRoute(
+            path: "search/:query",
+            name: AppRoute.search.name,
+            builder: (context, state) {
+              final query = state.pathParameters['query']!;
+              return SearchScreen(query: query);
             },
           )
         ],
