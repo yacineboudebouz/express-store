@@ -1,6 +1,7 @@
 import 'package:express_shop/src/core/common/gaps.dart';
 import 'package:express_shop/src/core/extentions.dart';
 import 'package:express_shop/src/features/book/presentaion/book_screen_controller.dart';
+import 'package:express_shop/src/features/cart/presentation/cart_controller.dart';
 import 'package:express_shop/src/theme/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -100,7 +101,11 @@ class _BookScreenState extends ConsumerState<BookScreen> {
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       minimumSize: const Size(150, 50)),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    ref
+                                        .read(cartControllerProvider.notifier)
+                                        .addToCart(book);
+                                  },
                                   child: const Text(
                                     "Add to cart",
                                     style: TextStyle(color: Colors.white),
