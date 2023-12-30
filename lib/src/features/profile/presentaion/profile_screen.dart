@@ -1,5 +1,6 @@
 import 'package:express_shop/src/core/providers/user_provider.dart';
 import 'package:express_shop/src/features/auth/Domain/user.dart';
+import 'package:express_shop/src/features/auth/presentation/auth_controller.dart';
 import 'package:express_shop/src/features/profile/presentaion/profile_controller.dart';
 import 'package:express_shop/src/theme/pallete.dart';
 
@@ -53,6 +54,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                decoration: InputDecoration(
+                    hintText: "username / email",
+                    fillColor: Colors.grey.withOpacity(0.3),
+                    filled: true,
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(10)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10))),
                 controller: userNameController,
                 onChanged: (value) {
                   tempuser.copyWith(username: value);
@@ -61,6 +71,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                decoration: InputDecoration(
+                    hintText: "username / email",
+                    fillColor: Colors.grey.withOpacity(0.3),
+                    filled: true,
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(10)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10))),
                 controller: emailController,
                 onChanged: (value) {
                   tempuser.copyWith(email: value);
@@ -69,6 +88,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                decoration: InputDecoration(
+                    hintText: "username / email",
+                    fillColor: Colors.grey.withOpacity(0.3),
+                    filled: true,
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(10)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10))),
                 controller: addressController,
                 onChanged: (value) {
                   tempuser.copyWith(address: value);
@@ -87,6 +115,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   userNameController.text,
                   emailController.text,
                   addressController.text);
+              ref.refresh(authControllerProvider);
             },
             child: const Text(
               "Save profile",
