@@ -6,6 +6,7 @@ import 'package:express_shop/src/features/cart/presentation/cart_controller.dart
 import 'package:express_shop/src/features/cart/presentation/widgets/cart_item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../theme/pallete.dart';
 
@@ -58,21 +59,41 @@ class _CartScreenState extends ConsumerState<CartScreen> {
               )
             ],
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Pallete.blackTheme,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Pallete.blackTheme,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    minimumSize: const Size(150, 50)),
+                onPressed: () {
+                  ref.read(cartControllerProvider.notifier).placeOrder();
+                },
+                child: const Text(
+                  "Place order",
+                  style: TextStyle(color: Colors.white),
                 ),
-                minimumSize: const Size(150, 50)),
-            onPressed: () {
-              ref.read(cartControllerProvider.notifier).placeOrder();
-            },
-            child: const Text(
-              "Place order",
-              style: TextStyle(color: Colors.white),
-            ),
-          )
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Pallete.blackTheme,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    minimumSize: const Size(150, 50)),
+                onPressed: () {
+                  GoRouter.of(context).goNamed("orders");
+                },
+                child: const Text(
+                  "My Orders",
+                  style: TextStyle(color: Colors.white),
+                ),
+              )
+            ],
+          ),
         ]),
       ),
     );

@@ -6,6 +6,7 @@ import 'package:express_shop/src/features/cart/domain/cart.dart';
 
 import 'package:express_shop/src/features/cart/domain/mutubale_cart.dart';
 import 'package:express_shop/src/features/home/domain/on_sell_book.dart';
+import 'package:express_shop/src/features/order/domain/order.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:http/http.dart' as http;
@@ -14,6 +15,10 @@ import '../../../core/providers/uri_provider.dart';
 
 final cartRepositoryProvider = Provider<CartRepository>((ref) {
   return CartRepository(ref: ref);
+});
+
+final ordersProvider = FutureProvider<List<Order>>((ref) async {
+  return ref.watch(cartRepositoryProvider).getUserOrders();
 });
 
 class CartRepository {
@@ -48,5 +53,26 @@ class CartRepository {
       _ref.watch(cartProvider.notifier).update((state) => Cart());
       throw "Ordered Succefully";
     }
+  }
+
+  Future<List<Order>> getUserOrders() async {
+    final id = _ref.watch(userStateProvider)!.id;
+    http.Response res = await http.get(
+      Uri.parse(
+        '$uri/order/userorders/$id',
+      ),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8'
+      },
+    );
+    if (res.statusCode == 200) {
+      var ordersFromServer = jsonDecode(res.body)['userOrders'];
+      List<Order> orders = [];
+      for (var order in ordersFromServer) {
+        orders.add(Order.fromMap(order));
+      }
+      return orders;
+    }
+    throw "Error happened while fetching orders";
   }
 }

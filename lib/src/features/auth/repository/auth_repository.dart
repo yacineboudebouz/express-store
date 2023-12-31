@@ -85,4 +85,9 @@ class AuthRepository {
       return;
     }
   }
+
+  Future logOut() async {
+    await _ref.read(localStorageProvider).removeToken();
+    _ref.read(userStateProvider.notifier).update((state) => null);
+  }
 }

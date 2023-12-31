@@ -6,6 +6,7 @@ import 'package:express_shop/src/features/auth/presentation/login_screen.dart';
 import 'package:express_shop/src/features/auth/presentation/register_screen.dart';
 
 import 'package:express_shop/src/features/landing/presentation/landing_screen.dart';
+import 'package:express_shop/src/features/order/presentation/oders_screen.dart';
 import 'package:express_shop/src/features/search/presentation/search_screen.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,7 +20,8 @@ enum AppRoute {
   mainapp,
   category,
   search,
-  book
+  book,
+  orders
 }
 
 final goRouterProvider = Provider<GoRouter>((ref) {
@@ -71,7 +73,14 @@ final goRouterProvider = Provider<GoRouter>((ref) {
               final id = int.parse(state.pathParameters['id']!);
               return BookScreen(id: id);
             },
-          )
+          ),
+          GoRoute(
+            path: "orders",
+            name: AppRoute.orders.name,
+            builder: (context, state) {
+              return const OrdersScreen();
+            },
+          ),
         ],
       )
     ],

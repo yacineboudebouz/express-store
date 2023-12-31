@@ -1,6 +1,6 @@
 import 'package:express_shop/src/core/providers/user_provider.dart';
 import 'package:express_shop/src/features/auth/Domain/user.dart';
-import 'package:express_shop/src/features/auth/presentation/auth_controller.dart';
+
 import 'package:express_shop/src/features/profile/presentaion/profile_controller.dart';
 import 'package:express_shop/src/theme/pallete.dart';
 
@@ -42,88 +42,108 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       }
     });
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.person_pin,
-            size: 200,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.person_pin,
+                size: 200,
+              ),
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                        hintText: "username / email",
+                        fillColor: Colors.grey.withOpacity(0.3),
+                        filled: true,
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(10)),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                    controller: userNameController,
+                    onChanged: (value) {
+                      tempuser.copyWith(username: value);
+                    },
+                  )),
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                        hintText: "username / email",
+                        fillColor: Colors.grey.withOpacity(0.3),
+                        filled: true,
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(10)),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                    controller: emailController,
+                    onChanged: (value) {
+                      tempuser.copyWith(email: value);
+                    },
+                  )),
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                        hintText: "username / email",
+                        fillColor: Colors.grey.withOpacity(0.3),
+                        filled: true,
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(10)),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                    controller: addressController,
+                    onChanged: (value) {
+                      tempuser.copyWith(address: value);
+                    },
+                  )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Pallete.blackTheme,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        minimumSize: const Size(150, 50)),
+                    onPressed: () {
+                      ref
+                          .read(profileControllerProvider.notifier)
+                          .updateProfile(
+                              ref.watch(userStateProvider)!.id,
+                              userNameController.text,
+                              emailController.text,
+                              addressController.text);
+                    },
+                    child: const Text(
+                      "Save profile",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  OutlinedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      onPressed: () {
+                        ref.read(profileControllerProvider.notifier).logOut();
+                      },
+                      child: const Text(
+                        "Logout !",
+                        style: TextStyle(color: Colors.black),
+                      ))
+                ],
+              )
+            ],
           ),
-          Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                decoration: InputDecoration(
-                    hintText: "username / email",
-                    fillColor: Colors.grey.withOpacity(0.3),
-                    filled: true,
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(10)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10))),
-                controller: userNameController,
-                onChanged: (value) {
-                  tempuser.copyWith(username: value);
-                },
-              )),
-          Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                decoration: InputDecoration(
-                    hintText: "username / email",
-                    fillColor: Colors.grey.withOpacity(0.3),
-                    filled: true,
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(10)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10))),
-                controller: emailController,
-                onChanged: (value) {
-                  tempuser.copyWith(email: value);
-                },
-              )),
-          Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                decoration: InputDecoration(
-                    hintText: "username / email",
-                    fillColor: Colors.grey.withOpacity(0.3),
-                    filled: true,
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(10)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10))),
-                controller: addressController,
-                onChanged: (value) {
-                  tempuser.copyWith(address: value);
-                },
-              )),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Pallete.blackTheme,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                minimumSize: const Size(150, 50)),
-            onPressed: () {
-              ref.read(profileControllerProvider.notifier).updateProfile(
-                  ref.watch(userStateProvider)!.id,
-                  userNameController.text,
-                  emailController.text,
-                  addressController.text);
-              ref.refresh(authControllerProvider);
-            },
-            child: const Text(
-              "Save profile",
-              style: TextStyle(color: Colors.white),
-            ),
-          )
-        ],
-      ),
-    ));
+        ));
   }
 }
