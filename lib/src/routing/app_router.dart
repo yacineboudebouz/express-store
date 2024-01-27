@@ -1,3 +1,4 @@
+import 'package:express_shop/src/features/admin/presentation/admin_screen.dart';
 import 'package:express_shop/src/features/book/presentaion/book_screen.dart';
 import 'package:express_shop/src/features/category/presentation/category_books_screen.dart';
 import 'package:express_shop/src/features/main/presentation/main_app.dart';
@@ -21,12 +22,18 @@ enum AppRoute {
   category,
   search,
   book,
-  orders
+  orders,
+  admin
 }
 
 final goRouterProvider = Provider<GoRouter>((ref) {
+  final user = ref.watch(userStateProvider);
   return GoRouter(
-    initialLocation: ref.watch(userStateProvider) == null ? '/landing' : '/',
+    initialLocation: user == null
+        ? '/landing'
+        : user.isAdmin
+            ? '/admin'
+            : '/',
     debugLogDiagnostics: true,
     routes: [
       GoRoute(
@@ -82,6 +89,14 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             },
           ),
         ],
+      ),
+      GoRoute(
+        path: "/admin",
+        name: AppRoute.admin.name,
+        builder: (context, state) {
+          return const AdminScreen();
+        },
+        routes: [],
       )
     ],
   );

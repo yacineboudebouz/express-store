@@ -14,5 +14,10 @@ void main() async {
       localStorageProvider.overrideWithValue(LocalStorage(prefs)),
     ],
   );
-  runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
+  runApp(
+    UncontrolledProviderScope(
+      container: container,
+      child: const MyApp(),
+    ),
+  );
 }

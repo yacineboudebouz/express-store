@@ -73,7 +73,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
                     decoration: InputDecoration(
-                        hintText: "username / email",
+                        hintText: "Email",
                         fillColor: Colors.grey.withOpacity(0.3),
                         filled: true,
                         border: OutlineInputBorder(
@@ -90,7 +90,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
                     decoration: InputDecoration(
-                        hintText: "username / email",
+                        hintText: "Address",
                         fillColor: Colors.grey.withOpacity(0.3),
                         filled: true,
                         border: OutlineInputBorder(

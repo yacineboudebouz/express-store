@@ -8,14 +8,15 @@ class AppUser {
   final String address;
   final String? token;
   final String profilePic;
-  AppUser({
-    required this.id,
-    required this.username,
-    required this.email,
-    required this.address,
-    this.token,
-    required this.profilePic,
-  });
+  final bool isAdmin;
+  AppUser(
+      {required this.id,
+      required this.username,
+      required this.email,
+      required this.address,
+      this.token,
+      required this.profilePic,
+      required this.isAdmin});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -36,6 +37,7 @@ class AppUser {
       address: map['Address'] as String,
       token: map['token'] != null ? map['token'] as String : null,
       profilePic: map['ProfilePictureURL'] as String,
+      isAdmin: map['isAdmin'] == 1,
     );
   }
 
@@ -59,6 +61,7 @@ class AppUser {
       address: address ?? this.address,
       token: token ?? this.token,
       profilePic: profilePic ?? this.profilePic,
+      isAdmin: isAdmin,
     );
   }
 }

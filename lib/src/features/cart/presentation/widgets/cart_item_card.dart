@@ -24,6 +24,13 @@ class _CartItemCardState extends ConsumerState<CartItemCard> {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
+      background: Container(
+        color: Colors.red,
+        child: const Icon(
+          Icons.delete,
+          color: Colors.white,
+        ),
+      ),
       onDismissed: (direction) {
         ref
             .watch(cartControllerProvider.notifier)

@@ -22,12 +22,16 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
                       final order = orders[index];
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: ListTile(
-                          tileColor: Colors.black26,
-                          title: Text("Order ID : ${order.orderId}"),
-                          subtitle: Text(order.bookTitles),
-                          trailing: Text(order.shippingAddress),
-                          leading: Text(order.totalAmount),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.black12),
+                          child: ListTile(
+                            title: Text("Order ID : ${order.orderId}"),
+                            subtitle: Text(order.bookTitles),
+                            trailing: Text(order.shippingAddress),
+                            leading: Text("${order.totalAmount} \$"),
+                          ),
                         ),
                       );
                     },
